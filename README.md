@@ -1,7 +1,7 @@
 MJCF model viewer
 ============
 
-This is simple [Mujoco XML file(MJCF)](http://mujoco.org/book/modeling.html#CURDF) viewer using [Roboschool](https://github.com/openai/roboschool).
+This is simple [MuJoCo XML file(MJCF)](http://mujoco.org/book/modeling.html#CURDF) viewer using [Roboschool](https://github.com/openai/roboschool).
 
 How to use
 ----------
