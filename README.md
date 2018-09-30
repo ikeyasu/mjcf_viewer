@@ -1,10 +1,12 @@
-MJCF model viewer
+MJCF and URDF model viewer
 ============
 
-This is simple [MuJoCo XML file(MJCF)](http://mujoco.org/book/modeling.html#CURDF) viewer using [Roboschool](https://github.com/openai/roboschool).
+This is simple [MuJoCo XML file(MJCF)](http://mujoco.org/book/modeling.html#CURDF) and [URDF XML file](http://wiki.ros.org/en/urdf/Tutorials)viewer using [Roboschool](https://github.com/openai/roboschool).
 
 How to use
 ----------
+
+### MuJoCo XML file
 
 Please edit bottom of `mjcf_viewer.py`.
 
@@ -15,6 +17,20 @@ Please edit bottom of `mjcf_viewer.py`.
 ```
     foot_list = ['front_left_foot', 'front_right_foot', 'left_back_foot', 'right_back_foot']
     run(model_xml="ant.xml", robot_name="torso", foot_list=foot_list)
+```
+
+### URDF XML file
+
+Please edit bottom of `urdf_viewer.py`.
+
+* `model_urdf` is path of URDF model file
+* `robot_name` is root body
+* `foot_list` is body of contacting to the ground.
+
+```
+    foot_list = []
+    run(model_urdf="atlas_description/urdf/atlas_v4_with_multisense.urdf",
+        robot_name="pelvis", footlist=foot_list)
 ```
 
 LICENSE
