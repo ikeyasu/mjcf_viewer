@@ -1,5 +1,5 @@
 # Copyright (c) 2018 ikeyasu (http://ikeyasu.com)
-
+import numpy as np
 from roboschool.gym_mujoco_walkers import RoboschoolForwardWalkerMujocoXML
 
 
@@ -20,6 +20,24 @@ class RoboschoolMjcfXmlEnv(RoboschoolForwardWalkerMujocoXML):
 
     def step(self, action):
         return self._step(action)
+
+    def _step(self, a):
+        if not self.scene.multiplayer:  # if multiplayer, action first applied to all robots, then global step() called, then _step() for all robots with the same actions
+            self.apply_action(a)
+            self.scene.global_step()
+
+        state = self.calc_state()  # also calculates self.joints_at_limit
+
+
+        self.potential = self.calc_potential()
+
+        self.rewards = [
+        ]
+
+        self.frame  += 1
+        self.reward += sum(self.rewards)
+        self.HUD(state, a, False)
+        return state, 0, False, {}
 
     def render(self, mode='human'):
         return self._render(mode, False)
