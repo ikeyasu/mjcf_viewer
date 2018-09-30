@@ -18,6 +18,14 @@ def zero_action(action_space):
     return a
 
 
+def sin_action(old_rads):
+    rads = old_rads + 0.025
+    a = np.sin(rads)
+    if isinstance(a, np.ndarray):
+        a = a.astype(np.float32)
+    return a, rads
+
+
 def run(model_xml, robot_name, foot_list):
     # env = gym.make("RoboschoolHumanoidFlagrun-v1")
     robot = type("Robo", (RoboschoolMjcfXmlEnv,), {
@@ -37,9 +45,15 @@ def run(model_xml, robot_name, foot_list):
     env.reset()
     env.render("human")  # This creates window to set callbacks on
 
+    rads = np.zeros(env.action_space.sample().shape, np.float32)
     while 1:
-        env.step(random_action(env.action_space))
-        # env.step(zero_action(env.action_space))
+        # Sin wave action
+        actions, rads = sin_action(rads)
+        env.step(actions)
+        # Random action
+        #env.step(random_action(env.action_space))
+        # Zero action
+        #env.step(zero_action(env.action_space))
         still_open = env.render("human")
         if not still_open:
             return
