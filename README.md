@@ -57,3 +57,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+### gym_forward_walker_servo.py
+
+See header of file.
+
+### samples/ant.xml
+
+https://github.com/openai/roboschool/blob/911f7cd55e6169097fad8735e5424cf436e3c0ad/roboschool/mujoco_assets/ant.xml
+
+```
+This work is derived from MuJuCo models used under
+the following license:
+
+This file is part of MuJoCo.     
+Copyright 2009-2015 Roboti LLC.	
+Mujoco		:: Advanced physics simulation engine
+Source		: www.roboti.us
+Version		: 1.31
+Released 	: 23Apr16
+Author		:: Vikash Kumar
+Contacts 	: kumar@roboti.us
+```
+
+### samples/pi_robot.urdf
+
+https://www.pirobot.org/blog/0014/
+https://www.pirobot.org/blog/0014/pi_robot_urdf.xml

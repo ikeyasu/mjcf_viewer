@@ -61,4 +61,4 @@ def run(model_xml, robot_name, foot_list):
 
 if __name__ == "__main__":
     foot_list = ['front_left_foot', 'front_right_foot', 'left_back_foot', 'right_back_foot']
-    run(model_xml="ant.xml", robot_name="torso", foot_list=foot_list)
+    run(model_xml="samples/ant.xml", robot_name="torso", foot_list=foot_list)

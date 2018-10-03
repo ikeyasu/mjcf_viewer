@@ -1,4 +1,5 @@
 # Copyright (c) 2018 ikeyasu (http://ikeyasu.com)
+import os
 import gym
 import numpy as np
 # noinspection PyUnresolvedReferences
@@ -7,7 +8,8 @@ from gym.envs.registration import register
 from roboschool import cpp_household
 from roboschool.gym_forward_walker import RoboschoolForwardWalker
 from roboschool.gym_urdf_robot_env import RoboschoolUrdfEnv
-from roboschool.scene_stadium import SinglePlayerStadiumScene
+
+from gym_forward_walker_servo import RoboschoolForwardWalkerServo
 
 
 def random_action(action_space):
@@ -24,7 +26,7 @@ def zero_action(action_space):
 
 
 def sin_action(old_rads):
-    rads = old_rads + 0.025
+    rads = old_rads + 0.01
     a = np.sin(rads)
     if isinstance(a, np.ndarray):
         a = a.astype(np.float32)
@@ -32,22 +34,28 @@ def sin_action(old_rads):
 
 
 def _robo_init(self, model_urdf, robot_name):
-    RoboschoolForwardWalker.__init__(self, power=0.30)
+    if self.servo:
+        RoboschoolForwardWalkerServo.__init__(self, power=0.30)
+    else:
+        RoboschoolForwardWalker.__init__(self, power=0.30)
     RoboschoolUrdfEnv.__init__(self,
                                model_urdf,
                                robot_name,
-                               action_dim=30, obs_dim=70,
+                               action_dim=11, obs_dim=70,
                                fixed_base=False,
                                self_collision=True)
 
 
 def _robot_specific_reset(self):
-    RoboschoolForwardWalker.robot_specific_reset(self)
+    if self.servo:
+        RoboschoolForwardWalkerServo.robot_specific_reset(self)
+    else:
+        RoboschoolForwardWalker.robot_specific_reset(self)
     self.set_initial_orientation(yaw_center=0, yaw_random_spread=np.pi)
-    self.head = self.parts["head"]
+    #self.head = self.parts["head"]
 
 
-def _set_initial_orientation(self, yaw_center, _yaw_random_spread):
+def _set_initial_orientation(self, yaw_center, yaw_random_spread):
     # noinspection PyArgumentList
     cpose = cpp_household.Pose()
     yaw = yaw_center
@@ -58,13 +66,13 @@ def _set_initial_orientation(self, yaw_center, _yaw_random_spread):
     self.initial_z = 1.5
 
 
-def run(model_urdf, robot_name, footlist):
+def run(model_urdf, robot_name, footlist, servo=False):
     # env = gym.make("RoboschoolHumanoidFlagrun-v1")
-    robot = type("Robo", (RoboschoolForwardWalker, RoboschoolUrdfEnv,), {
+    walker_class = RoboschoolForwardWalkerServo if servo else RoboschoolForwardWalker
+    robot = type("Robo", (walker_class, RoboschoolUrdfEnv,), {
+        "servo": servo,
         "foot_list": footlist,
         "__init__": lambda self: _robo_init(self, model_urdf, robot_name),
-        "create_single_player_scene":
-            lambda self: SinglePlayerStadiumScene(gravity=9.8, timestep=0.0165 / 8, frame_skip=8),
         "alive_bonus": lambda self, z, pitch: 1,
         "robot_specific_reset": _robot_specific_reset,
         "set_initial_orientation": _set_initial_orientation
@@ -96,5 +104,5 @@ def run(model_urdf, robot_name, footlist):
 
 if __name__ == "__main__":
     foot_list = []
-    run(model_urdf="atlas_description/urdf/atlas_v4_with_multisense.urdf",
-        robot_name="pelvis", footlist=foot_list)
+    run(model_urdf=os.path.join(os.path.dirname(os.path.abspath(__file__)), "samples/pi_robot.urdf"),
+        robot_name="base_link", footlist=foot_list, servo=True)
