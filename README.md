@@ -16,7 +16,7 @@ Please edit bottom of `mjcf_viewer.py`.
 
 ```
     foot_list = ['front_left_foot', 'front_right_foot', 'left_back_foot', 'right_back_foot']
-    run(model_xml="ant.xml", robot_name="torso", foot_list=foot_list)
+    run(model_xml="samples/ant.xml", robot_name="torso", foot_list=foot_list)
 ```
 
 ### URDF XML file
@@ -29,8 +29,8 @@ Please edit bottom of `urdf_viewer.py`.
 
 ```
     foot_list = []
-    run(model_urdf="atlas_description/urdf/atlas_v4_with_multisense.urdf",
-        robot_name="pelvis", footlist=foot_list)
+    run(model_urdf=os.path.join(os.path.dirname(os.path.abspath(__file__)), "samples/pi_robot.urdf"),
+        robot_name="base_link", footlist=foot_list, servo=True)
 ```
 
 LICENSE
