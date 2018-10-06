@@ -1,88 +1,371 @@
 <?xml version="1.0"?><robot name="flexible">
-<!--
-http://marupeke296.com/EL_Ard_No10_Bracket.html
--->
-  <link name="body1">
-    <visual>
-      <geometry>
-        <box size=".22 .22 .12"/>
-      </geometry>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="blue">
-        <color rgba="0.2 0.2 1 1"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size=".22 .22 .12"/>
-      </geometry>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="blue">
-        <color rgba="0.2 0.2 1 1"/>
-      </material>
-    </collision>
-  </link>
-
-  <link name="cylinder1">
-    <visual>
-      <geometry>
-        <cylinder length="0.09" radius="0.05"/>
-      </geometry>
-      <origin rpy="0 1.57 0" xyz="0.15 0.06 0.0"/>
-      <material name="blue">
-        <color rgba="0.2 0.2 1 1"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="0.09" radius="0.05"/>
-      </geometry>
-      <origin rpy="0 1.57 0" xyz="0.15 0.06 0.0"/>
-      <material name="blue">
-        <color rgba="0.2 0.2 1 1"/>
-      </material>
-    </collision>
-  </link>
-
-  <link name="leg1">
-    <visual>
-      <geometry>
-        <box size=".05 .42 .02"/>
-      </geometry>
-      <origin rpy="0 1.57 0" xyz="0.205 0.06 0.0"/>
-      <material name="white">
-        <color rgba="1 1 1 1"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size=".05 .42 .02"/>
-      </geometry>
-      <origin rpy="0 1.57 0" xyz="0.205 0.06 0.0"/>
-      <material name="white">
-        <color rgba="1 1 1 1"/>
-      </material>
-    </collision>
-  </link>
-
-
-  <joint name="ignore_cylinder1_joint" type="fixed">
-    <parent link="body1"/>
-    <child link="cylinder1"/>
-    <origin rpy="0 0 0" xyz="0 0.0 0.0"/>
-  </joint>
-
-  <joint name="leg1_joint" type="revolute">
-    <parent link="cylinder1"/>
-    <child link="leg1"/>
-    <origin rpy="0 0 0" xyz="0 0.06 0.0"/>
-    <limit lower="-1.05" upper="1.05" effort="10" velocity="3"/>
     <!--
-    <limit lower="-1.57079633" upper="1.57079633" effort="10" velocity="3"/>
-    <limit lower="-1.05" upper="1.05" effort="10" velocity="3"/>
-    <limit lower="-3.146" upper="3.146" effort="10" velocity="3"/>
+    http://marupeke296.com/EL_Ard_No10_Bracket.html
     -->
-    <axis xyz="1 0 0"/>
-  </joint>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size=".66 .56 .12"/>
+            </geometry>
+            <origin rpy="0.0 0 0" xyz="-0.22 0.22 0.17"/>
+            <material name="green">
+                <color rgba="0.2 1 0.2 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".22 .22 .12"/>
+            </geometry>
+            <origin rpy="1.57 0 0" xyz="0 0 0"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+    <!-- servo1 -->
+    <link name="body1">
+        <visual>
+            <geometry>
+                <box size=".22 .22 .12"/>
+            </geometry>
+            <origin rpy="1.57 0 0" xyz="0 0 0"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".22 .22 .12"/>
+            </geometry>
+            <origin rpy="1.57 0 0" xyz="0 0 0"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+    <link name="cylinder1">
+        <visual>
+            <geometry>
+                <cylinder length="0.09" radius="0.05"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="0.15 0 -0.06"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.09" radius="0.05"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="0.15 0 -0.06"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+    <link name="leg1">
+        <visual>
+            <geometry>
+                <box size=".42 .05 .02"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="0.205 0.0 0.0"/>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".42 .05 .02"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="0.205 0.0 0.0"/>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+
+    <joint name="ignore_cylinder1_joint" type="fixed">
+        <parent link="body1"/>
+        <child link="cylinder1"/>
+    </joint>
+
+    <joint name="leg1_joint" type="revolute">
+        <parent link="cylinder1"/>
+        <child link="leg1"/>
+        <origin rpy="0 0 0" xyz="0 0 -0.06"/>
+        <limit lower="-1.05" upper="1.05" effort="10" velocity="3"/>
+        <!--
+        <limit lower="-1.57079633" upper="1.57079633" effort="10" velocity="3"/>
+        <limit lower="-1.05" upper="1.05" effort="10" velocity="3"/>
+        <limit lower="-3.146" upper="3.146" effort="10" velocity="3"/>
+        -->
+        <axis xyz="1 0 0"/>
+    </joint>
+
+    <!-- servo2 -->
+    <link name="body2">
+        <visual>
+            <geometry>
+                <box size=".22 .22 .12"/>
+            </geometry>
+            <origin rpy="1.57 0 0" xyz="0 0.44 0"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".22 .22 .12"/>
+            </geometry>
+            <origin rpy="1.57 0 0" xyz="0 0.44 0"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+    <link name="cylinder2">
+        <visual>
+            <geometry>
+                <cylinder length="0.09" radius="0.05"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="0.15 0.44 -0.06"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.09" radius="0.05"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="0.15 0.44 -0.06"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+    <link name="leg2">
+        <visual>
+            <geometry>
+                <box size=".42 .05 .02"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="0.205 0 0.0"/>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".42 .05 .02"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="0.205 0 0.0"/>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+
+    <joint name="ignore_cylinder2_joint" type="fixed">
+        <parent link="body2"/>
+        <child link="cylinder2"/>
+    </joint>
+
+    <joint name="leg2_joint" type="revolute">
+        <parent link="cylinder2"/>
+        <child link="leg2"/>
+        <origin rpy="0 0 0" xyz="0 0.44 -0.06"/>
+        <limit lower="-1.05" upper="1.05" effort="10" velocity="3"/>
+        <axis xyz="1 0 0"/>
+    </joint>
+
+
+    <!-- servo3 -->
+    <link name="body3">
+        <visual>
+            <geometry>
+                <box size=".22 .22 .12"/>
+            </geometry>
+            <origin rpy="1.57 0 0" xyz="-0.44 0 0"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".22 .22 .12"/>
+            </geometry>
+            <origin rpy="1.57 0 0" xyz="-0.44 0 0"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+    <link name="cylinder3">
+        <visual>
+            <geometry>
+                <cylinder length="0.09" radius="0.05"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="-0.59 0 -0.06"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.09" radius="0.05"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="-0.59 0 -0.06"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+    <link name="leg3">
+        <visual>
+            <geometry>
+                <box size=".42 .05 .02"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="-0.644 0.0 0.0"/>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".42 .05 .02"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="-0.644 0.0 0.0"/>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+
+    <joint name="ignore_cylinder3_joint" type="fixed">
+        <parent link="body3"/>
+        <child link="cylinder3"/>
+    </joint>
+
+    <joint name="leg3_joint" type="revolute">
+        <parent link="cylinder3"/>
+        <child link="leg3"/>
+        <origin rpy="0 0 0" xyz="0 0 -0.06"/>
+        <limit lower="-1.05" upper="1.05" effort="10" velocity="3"/>
+        <!--
+        <limit lower="-1.57079633" upper="1.57079633" effort="10" velocity="3"/>
+        <limit lower="-1.05" upper="1.05" effort="10" velocity="3"/>
+        <limit lower="-3.146" upper="3.146" effort="10" velocity="3"/>
+        -->
+        <axis xyz="1 0 0"/>
+    </joint>
+
+    <!-- servo4 -->
+    <link name="body4">
+        <visual>
+            <geometry>
+                <box size=".22 .22 .12"/>
+            </geometry>
+            <origin rpy="1.57 0 0" xyz="-0.44 0.44 0"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".22 .22 .12"/>
+            </geometry>
+            <origin rpy="1.57 0 0" xyz="-0.44 0.44 0"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+    <link name="cylinder4">
+        <visual>
+            <geometry>
+                <cylinder length="0.09" radius="0.05"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="-0.59 0.44 -0.06"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.09" radius="0.05"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="-0.59 0.44 -0.06"/>
+            <material name="blue">
+                <color rgba="0.2 0.2 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+    <link name="leg4">
+        <visual>
+            <geometry>
+                <box size=".42 .05 .02"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="-0.644 0 0.0"/>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size=".42 .05 .02"/>
+            </geometry>
+            <origin rpy="0 1.57 0" xyz="-0.644 0 0.0"/>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </collision>
+    </link>
+
+
+    <joint name="ignore_cylinder4_joint" type="fixed">
+        <parent link="body4"/>
+        <child link="cylinder4"/>
+    </joint>
+
+    <joint name="leg4_joint" type="revolute">
+        <parent link="cylinder4"/>
+        <child link="leg4"/>
+        <origin rpy="0 0 0" xyz="0 0.44 -0.06"/>
+        <limit lower="-1.05" upper="1.05" effort="10" velocity="3"/>
+        <axis xyz="1 0 0"/>
+    </joint>
+
+    <!-- joint for base_link -->
+    <joint name="body1_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="body1"/>
+    </joint>
+
+    <joint name="body2_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="body2"/>
+    </joint>
+
+    <joint name="body3_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="body3"/>
+    </joint>
+
+    <joint name="body4_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="body4"/>
+    </joint>
 
 </robot>

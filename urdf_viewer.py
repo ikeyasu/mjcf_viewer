@@ -41,7 +41,7 @@ def _robo_init(self, model_urdf, robot_name):
     RoboschoolUrdfEnv.__init__(self,
                                model_urdf,
                                robot_name,
-                               action_dim=11, obs_dim=70,
+                               action_dim=4, obs_dim=70,
                                fixed_base=False,
                                self_collision=True)
 
@@ -104,5 +104,5 @@ def run(model_urdf, robot_name, footlist, servo=False):
 
 if __name__ == "__main__":
     foot_list = []
-    run(model_urdf=os.path.join(os.path.dirname(os.path.abspath(__file__)), "samples/pi_robot.urdf"),
+    run(model_urdf=os.path.join(os.path.dirname(os.path.abspath(__file__)), "robo1.urdf"),
         robot_name="base_link", footlist=foot_list, servo=True)

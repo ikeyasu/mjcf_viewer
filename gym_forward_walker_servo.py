@@ -17,7 +17,7 @@ class RoboschoolForwardWalkerServo(SharedMemoryClientEnv):
         self.camera_x = 0
         self.walk_target_x = 1e3  # kilometer away
         self.walk_target_y = 0
-        self.start_pos_x, self.start_pos_y, self.start_pos_z = 0, 0, 0.0
+        self.start_pos_x, self.start_pos_y, self.start_pos_z = 0, 0, -0.5
         self.camera_x = 0
         self.camera_y = 4.3
         self.camera_z = 45.0
@@ -48,7 +48,7 @@ class RoboschoolForwardWalkerServo(SharedMemoryClientEnv):
             #j.set_motor_torque( self.power*j.power_coef*float(np.clip(a[n], -1, +1)) )
             lower, upper = j.limits()[0:2]
             #j.set_servo_target(self.power*j.power_coef*float(np.clip(a[n], -1, +1)), 0.1, 0.1, 1)
-            j.set_servo_target(float(np.clip(a[n], lower, upper)), 0.1, 0.1, 1)
+            j.set_servo_target(float(np.clip(a[n], lower, upper)), 0.1, 0.1, 4)
 
     def calc_state(self):
         j = np.array([j.current_relative_position() for j in self.ordered_joints], dtype=np.float32).flatten()
