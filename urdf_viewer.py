@@ -33,7 +33,7 @@ def sin_action(old_rads):
     return a, rads
 
 
-def _robo_init(self, model_urdf, robot_name):
+def _robo_init(self, model_urdf, robot_name, action_dim):
     if self.servo:
         RoboschoolForwardWalkerServo.__init__(self, power=0.30)
     else:
@@ -41,7 +41,7 @@ def _robo_init(self, model_urdf, robot_name):
     RoboschoolUrdfEnv.__init__(self,
                                model_urdf,
                                robot_name,
-                               action_dim=11, obs_dim=70,
+                               action_dim=action_dim, obs_dim=70,
                                fixed_base=False,
                                self_collision=True)
 
@@ -66,13 +66,13 @@ def _set_initial_orientation(self, yaw_center, yaw_random_spread):
     self.initial_z = 1.5
 
 
-def run(model_urdf, robot_name, footlist, servo=False):
+def run(model_urdf, robot_name, footlist, servo=False, action_dim=4):
     # env = gym.make("RoboschoolHumanoidFlagrun-v1")
     walker_class = RoboschoolForwardWalkerServo if servo else RoboschoolForwardWalker
     robot = type("Robo", (walker_class, RoboschoolUrdfEnv,), {
         "servo": servo,
         "foot_list": footlist,
-        "__init__": lambda self: _robo_init(self, model_urdf, robot_name),
+        "__init__": lambda self: _robo_init(self, model_urdf, robot_name, action_dim),
         "alive_bonus": lambda self, z, pitch: 1,
         "robot_specific_reset": _robot_specific_reset,
         "set_initial_orientation": _set_initial_orientation
@@ -105,4 +105,4 @@ def run(model_urdf, robot_name, footlist, servo=False):
 if __name__ == "__main__":
     foot_list = []
     run(model_urdf=os.path.join(os.path.dirname(os.path.abspath(__file__)), "samples/pi_robot.urdf"),
-        robot_name="base_link", footlist=foot_list, servo=True)
+        robot_name="base_link", footlist=foot_list, servo=True, action_dim=11)
